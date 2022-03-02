@@ -26,7 +26,7 @@ function sendToBack(){
         sessionStorage.setItem('Authorization',`${response.data.access_token}`)
 
         //TROCAR
-        window.location.replace(`${url}/public/me.html`)
+        window.location.replace('http://127.0.0.1:5501/public/me.html')
 
     }
 }

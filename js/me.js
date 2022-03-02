@@ -82,7 +82,7 @@ function saveProduct(){
             available: checkbox.checked
         }
 
-    axios.post(`${url}/products`, CreateProduct, {
+    axios.post(`${url}/auth/products`, CreateProduct, {
         headers: {
             'Authorization' : `Bearer ${token}`
         }

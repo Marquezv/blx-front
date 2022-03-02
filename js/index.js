@@ -107,11 +107,11 @@ function saveOrder(id){
         }).then(response => {
             sessionStorage.setItem('product_id', id)
             console.log(response)
-            window.location.replace(`${url}/public/pedidos.html`)
+            window.location.replace('http://127.0.0.1:5501/public/pedidos.html')
         })
     }
     else{
-        window.location.replace(`${url}/public/login.html`)
+        window.location.replace('http://127.0.0.1:5501/public/login.html')
     }
 
     
