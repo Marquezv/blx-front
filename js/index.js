@@ -1,6 +1,37 @@
 const url = "https://blx-app.herokuapp.com"
 
-
+document.addEventListener('DOMContentLoaded', function(){
+  const token = sessionStorage.getItem('Authorization')
+  const nome = sessionStorage.getItem('UserName')
+  console.log(token)
+  if(token == null){
+    console.log('Deslogado')
+    const banner = document.getElementById('banner-text')
+    const text = `<h4>Faça o login ou registrese</h4>
+                 <a href='login.html' class="btn btn-primary" value="Login" >Login</a>
+                 <a href='register.html' class='btn btn-primary' value="Register">Register</a>`
+    
+    banner.innerHTML = text
+    
+  }
+  else{
+    const navBar = document.getElementById('navBarList')
+    console.log('Logado')
+    const text = `<h4>Bem Vindo, ${nome}</h4>`
+    
+    const navLi = `<li class="nav-item">
+                      <a class="nav-link" href="me.html">Me</a>
+                  </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="login.html">Order</a>
+                 </li>
+      `
+    banner.innerHTML = text
+    
+    
+   }
+  
+})
 
 function loadProducts(){
     axios.get(`${url}/products`)
@@ -40,8 +71,7 @@ function loadProducts(){
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="input-group mb-2">
-                                <img src="./img/gato.jpg" class="card-img-top" alt="...">
+                            <div class="input-group mb-2">                            <img src="./img/gato.jpg" class="card-img-top" alt="...">
                             </div>
                             <div class="input-group mb-2">
                                 <h3>${products.name}</h3>

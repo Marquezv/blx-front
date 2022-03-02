@@ -24,7 +24,7 @@ function sendToBack(){
         
         alert(`Parabéns ${response.data.user.name} funcionou tudo certinho!`)
         sessionStorage.setItem('Authorization',`${response.data.access_token}`)
-
+        sessionStorage.setItem('UserName' , `${response.data.user.name}`)
         //TROCAR
         window.location.replace('me.html')
 
