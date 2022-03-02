@@ -96,7 +96,7 @@ function saveOrder(id){
         delivery_place:" null",
         delivery_type: "Casa",
         notes: "Sem Observações",
-        product_id: 34
+        product_id: id
     }
     
     if(sessionStorage.getItem('Authorization')){
@@ -109,6 +109,7 @@ function saveOrder(id){
             console.log(response)
             window.location.replace('pedidos.html')
         })
+        console.log('AUI')
     }
     else{
         window.location.replace('login.html')
