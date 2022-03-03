@@ -2,34 +2,24 @@ const url = "https://blx-app.herokuapp.com"
 
 document.addEventListener('DOMContentLoaded', function(){
   const token = sessionStorage.getItem('Authorization')
-  const nome = sessionStorage.getItem('UserName')
+  const name = sessionStorage.getItem('UserName')
   console.log(token)
   if(token == null){
     console.log('Deslogado')
     const banner = document.getElementById('banner-text')
-    const text = `<h4>Faça o login ou registrese</h4>
-                 <a href='login.html' class="btn btn-primary" value="Login" >Login</a>
-                 <a href='register.html' class='btn btn-primary' value="Register">Register</a>`
-    
+    const text = '<h4>Faça o login ou registrese!</h4> <a href="login.html" class="btn btn-lg btn-primary">Login</a> <a href="register.html" class="btn btn-lg btn-primary">Register</a>'
     banner.innerHTML = text
     
   }
   else{
-    const navBar = document.getElementById('navBarList')
     console.log('Logado')
-    const text = `<h4>Bem Vindo, ${nome}</h4>`
-    
-    const navLi = `<li class="nav-item">
-                      <a class="nav-link" href="me.html">Me</a>
-                  </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">Order</a>
-                 </li>
-      `
+    const navBarList = document.getElementById('navBarList')
+    const navItem = '<li><a class="nav-link" href="index.html">Home</a></li><li><a class="nav-link" href="me.html">Me</a></li><li><a class="nav-link" href="pedidos.html">Order</a></li><li><button class="btn btn-danger" onclick="clearSession()" >Signout</button></li>'
+    text = `<h4>Bem Vindo, ${name}</h4>`
     banner.innerHTML = text
-    
-    
-   }
+    navBarList.innerHTML = navItem
+
+  }
   
 })
 
@@ -51,66 +41,22 @@ function loadProducts(){
                 <div class="card-body">
                     <h5 >${products.name}</h5>
                     <p class="card-text">
-                    <ul>
-                        <li>${products.details}</li>
-                        <li>R$ ${products.price}</li>
-                    </ul>
+                      <label>R$ ${products.price}</label>
                     </p>
                     <div class="card-footer">
-                    <a href="#myModal" role="button" class="btn btn-lg btn-primary" data-bs-toggle="modal">Veja Mais</a>
+                    <button class="btn" onclick="viewProduct(${products.id}, ${products.user.id})" > Veja Mais </button>
                     </div>
                 </div>
                 </div>
                 </div>`
                 
-                const ModalModel = `            
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Seu Novo Produto</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="input-group mb-2">                            <img src="./img/gato.jpg" class="card-img-top" alt="...">
-                            </div>
-                            <div class="input-group mb-2">
-                                <h3>${products.name}</h3>
-                            </div>
                 
-                            <div class="input-group mb-2">
-                                <ul>
-                                    <li>${products.details}</li>
-                                    <li>R$ ${products.price}</li>
-                                </ul>
-                            </div>
-                            <div class="input-group mb-2">
-                                <h5>${products.user.name}</h5>
-                                <ul>
-                                    <li>${products.user.telephone}</li>
-                                    
-                                </ul>
-                            </div>
-                            
-                            <div class="modal-footer">
-                            <button id="btn_back" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button id="btn_saved" type="button" class="btn btn-primary" onclick="saveOrder(${products.id})">Criar Pedido</button>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    </div>`
-
             
                 const item = document.createElement('li')
                 item.innerHTML = card;
             
                 list.appendChild(item)
 
-                const modal = document.getElementById("myModal")
-                const item_modal = document.createElement('div')
-                item_modal.innerHTML = ModalModel;
-                modal.appendChild(item_modal)
-                console.log(products)
             });
         
     })
@@ -119,36 +65,9 @@ function loadProducts(){
 }
 loadProducts()
 
-function saveOrder(id){
-    const token = sessionStorage.getItem('Authorization')
-    const CreateOrder  = {
-        amout: 1,
-        delivery_place:" null",
-        delivery_type: "Casa",
-        notes: "Sem Observações",
-        product_id: id
-    }
-    
-    if(sessionStorage.getItem('Authorization')){
-        axios.post(`${url}/orders`, CreateOrder, {
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            }
-        }).then(response => {
-            sessionStorage.setItem('product_id', id)
-            console.log(response)
-            window.location.replace('pedidos.html')
-        })
-        console.log('AUI')
-    }
-    else{
-        window.location.replace('login.html')
-    }
-
-    
-
-   
-
-
+function viewProduct(id, user_id){
+    sessionStorage.setItem('product_id', id)
+    sessionStorage.setItem('user_id', user_id)
+    window.location.replace('product.html')
 
 }
