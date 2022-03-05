@@ -105,30 +105,27 @@ function createOrder(product_id){
   axios.get(`${url}/products/${product_id}`)
   .then(response => {
     const pedido = response.data
-    
+   
 
     const CreateOrder = {
       amount: 1,
-      delivery_place: 'products_details',
-      delivery_type: 'products_price_float',
-      notes: 'checkbox.checked',
-      product_id: 38
-   }
+      delivery_place: pedido.product.delivery_place,
+      delivery_type: pedido.product.delivery_type,
+      notes: pedido.product.notes,
+      product_id: product_id
+    }
+      axios.post(`${url}/orders`, CreateOrder, {
+        headers: {
+            'Authorization' : `Bearer ${token}`
+        }
+      }).then(res => {
+        window.location.replace('pedidos.html')
+        
+      })
 
-    axios.post(`${url}/orders`, CreateOrder, {
-      headers: {
-          'Authorization' : `Bearer ${token}`
-      }
-    }).then(res => {
-
-      window.location.replace('pedidos.html')
-      
-    })
+    
 
   })
- 
-  
-
   
 
 }
