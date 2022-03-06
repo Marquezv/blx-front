@@ -51,7 +51,7 @@ function createOrder(product_id){
         const order = response.data
         const CreateOrder = {
             amount: 1,
-            delivery_place: 'Sera adicionado o endere',
+            delivery_place: 'Av. Jorge João Saad, 900 - Vila Inah, São Paulo - SP, 05618-001',
             delivery_type: option,
             notes: notes,
             product_id: product_id,
