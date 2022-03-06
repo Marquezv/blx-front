@@ -67,3 +67,43 @@ export function getMyProducts(){
         }
     })
 }
+
+export function getProduct(product_id){
+    return axios.get(`${url}/products/${product_id}`)
+}
+
+export function getProductStore(user_id){
+    return axios.get(`${url}/products/store/${user_id}`)
+}
+
+export function postOrder(CreateOrder){
+    const token = sessionStorage.getItem('Authorization')
+    return axios.post(`${url}/orders`, CreateOrder, {
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    }).then(response => {
+        console.log(response)
+        window.location.replace('orders.html')
+    }).catch(error => {
+        alert(error.response.data.detail)
+    })
+}
+
+export function getOrder(){
+    const token = sessionStorage.getItem('Authorization')
+    return axios.get(`${url}/orders`, {
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    })
+}
+
+export function soldOrder(){
+    const token = sessionStorage.getItem('Authorization')
+    return axios.get(`${url}/orders/1/sold`, {
+        headers : {
+            'Authorization' : `Bearer ${token}`
+        }
+    })
+}
